@@ -127,9 +127,15 @@ app.delete('/list/:listId', (req, res) => {
 
 
 // MiddleWare requests
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
     fs.appendFileSync('./requests.log', `[${new Date(Date.now()).toLocaleString()}] ${req.method} request received (URI: ${req.originalUrl}).\n`);
     next();
+});
+*/
+
+app.use((req, res, next) => {
+    fs.appendFileSync('./requests.log', `[${new Date().toJSON().slice(0,10)} ${new Date().toJSON().slice(11,19)}] [${req.method}] ${req.originalUrl}\r\n`)
+    next()
 });
 
 // MiddleWare errors
