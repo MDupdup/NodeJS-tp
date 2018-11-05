@@ -1,0 +1,79 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Valéry Giscard d'Estaing",
+            "password": "azerty"
+        },
+        {
+            "id": 2,
+            "name": "Nicolas Sarkozy",
+            "password": "bonjourlafrance"
+        },
+        {
+            "id": 3,
+            "name": "Emmanuel Macron",
+            "password": "NOTREPROJEEEET"
+        },
+        {
+            "id": 4,
+            "name": "Charles de Gaulle",
+            "password": "parislibre"
+        },
+        {
+            "id": 5,
+            "name": "François Hollande",
+            "password": "chocolatine"
+        },
+        {
+            "id": 12,
+            "name": "François Mitterand",
+            "password": "argent"
+        },
+        {
+            "id": "12",
+            "name": "François Mitterand",
+            "password": "argent"
+        }
+    ],
+    "items": [
+        {
+            "id": 1,
+            "label": "Baguette",
+            "image": "https://medialb.digiteka.net/multi/3550x/lsprq8-HC.jpg",
+            "description": "le baguette"
+        },
+        {
+            "id": 2,
+            "label": "Bouteille de vin",
+            "image": "https://www.atabula.com/wp-content/uploads/2017/06/vin-le-plus-cher-du-monde-romanee-conti.jpg",
+            "description": "pour la picole du bon petit français"
+        },
+        {
+            "id": 3,
+            "label": "Camembert",
+            "image": "https://www.graindorge.fr/wp-content/uploads/2016/01/camembert1.png",
+            "description": "mmmh le camembert"
+        }
+    ],
+    "list": [
+        {
+            "id": 1,
+            "name": "President1",
+            "userId": 1,
+            "itemId": 2
+        },
+        {
+            "id": 3,
+            "name": "President3",
+            "userId": 3,
+            "itemId": 3
+        },
+        {
+            "id": 4,
+            "name": "President4",
+            "userId": 4,
+            "itemId": 3
+        }
+    ]
+}

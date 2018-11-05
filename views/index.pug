@@ -1,0 +1,25 @@
+html
+    head
+        title= title
+    body
+        h1= message
+
+    ul
+        li 
+            a(href="/list/all") Tout lister
+        li 
+            a(href="/") Menu principal
+
+    p
+    p
+
+    if json
+        unless user
+            each user in json.users
+                a(href="/list/detail/" + user.id)
+                    h2= user.name
+
+    if user
+        h4= user.name
+        p= user.password
+    
