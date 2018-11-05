@@ -2,3 +2,7 @@
 [11/5/2018, 11:30:49 PM] GET request received (URI: /users).
 [11/5/2018, 11:30:59 PM] GET request received (URI: /users).
 [11/5/2018, 11:31:08 PM] GET request received (URI: /items/3).
+[11/5/2018, 11:36:42 PM] GET request received (URI: /items/65).
+[11/5/2018, 11:36:50 PM] DELETE request received (URI: /items/65).
+[11/5/2018, 11:37:42 PM] DELETE request received (URI: /list/7).
+[11/5/2018, 11:45:44 PM] GET request received (URI: /users).

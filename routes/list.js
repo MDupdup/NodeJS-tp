@@ -49,7 +49,7 @@ app.delete('/:listId', (req, res) => {
 
 // MiddleWare errors
 app.use((err, req, res, next) => {
-    fs.appendFileSync('./logs/errors.log', `[${new Date(Date.now()).toLocaleString()}] Error catched on ${req.method} request. \n ==> URI: ${req.originalUrl}.\r\n`);
+    fs.appendFileSync('./logs/errors.log', `[${new Date(Date.now()).toLocaleString()}] Error catched on ${req.method} request. \n ==> URI: ${req.originalUrl}.\n Error: ${err.stack}\r\n`);
     next();
 });
 

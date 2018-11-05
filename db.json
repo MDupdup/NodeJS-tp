@@ -68,12 +68,6 @@
             "name": "President3",
             "userId": 3,
             "itemId": 3
-        },
-        {
-            "id": 4,
-            "name": "President4",
-            "userId": 4,
-            "itemId": 3
         }
     ]
 }

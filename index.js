@@ -2,7 +2,7 @@
 const app = require('express')();
 const fs = require('fs');
 
-const users = require('./users');
+const users = require('./routes/users');
 const items = require('./routes/items');
 const list = require('./routes/list');
 
@@ -13,15 +13,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.set('view engine', 'pug');
 app.set('views', './views');
-
-
-
-fs.readFile('./db.json', (err, data) => {
-    if(err) {
-        console.error(err)
-    }
-    json = JSON.parse(data);
-});
 
 app.use('/users', users);
 app.use('/items', items);
