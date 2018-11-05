@@ -132,6 +132,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// MiddleWare errors
 app.use((err, req, res, next) => {
     fs.appendFileSync('./errors.log', `[${new Date(Date.now()).toLocaleString()}] Error catched on ${req.method} request. \n ==> URI: ${req.originalUrl}.\r\n`);
     next();
