@@ -13,36 +13,34 @@ app.use((req, res, next) => {
     next()
 });
 
-app.route('/list')
-    .get((req, res) => { res.json(json.list) })
+app.route('/')
+    .get((req, res) => { res.json(json.users) })
     .post((req, res) => {
 
-        let List = {
-            id: (typeof req.body.id !== 'undefined') ? req.body.id : json.list.length + 1,
+        let User = {
+            id: (typeof req.body.id !== 'undefined') ? req.body.id : json.users.length + 1,
             name: req.body.name,
-            userId: req.body.userId,
-            itemId: req.body.itemId
+            password: req.body.password
         }
-        json.list.push(List);
+        json.users.push(User);
 
         fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
      });
-app.get('/:listId', (req, res) => { res.json(json.list.find(x => x.id == req.params.listId)) });
-app.put('/:listId', (req, res) => {
+app.get('/:userId', (req, res) => { res.json(json.users.find(x => x.id == req.params.userId)) });
+app.put('/:userId', (req, res) => {
     
-    let list = json.list.find(x => x.id == req.params.listId);
+    let user = json.users.find(x => x.id == req.params.userId);
 
     list.name = req.body.name;
-    list.userId = req.body.userId;
-    list.itemId = req.body.itemId;
+    list.password = req.body.password;
 
     fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
 });
-app.delete('/:listId', (req, res) => {
+app.delete('/:userId', (req, res) => {
     
-    let i = json.list.findIndex(x => x.id == req.params.listId);
+    let i = json.users.findIndex(x => x.id == req.params.userId);
 
-    json.list.splice(i,1);
+    json.users.splice(i,1);
 
     fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
 });

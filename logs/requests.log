@@ -1,0 +1,4 @@
+[2018-11-05 21:09:37] [DELETE] /users/56
+[11/5/2018, 11:30:49 PM] GET request received (URI: /users).
+[11/5/2018, 11:30:59 PM] GET request received (URI: /users).
+[11/5/2018, 11:31:08 PM] GET request received (URI: /items/3).

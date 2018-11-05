@@ -31,14 +31,9 @@
             "password": "argent"
         },
         {
-            "id": "12",
-            "name": "François Mitterand",
-            "password": "argent"
-        },
-        {
-            "id": "12",
-            "name": "François Mitterand",
-            "password": "argent"
+            "id": 9,
+            "name": "Jacques Chirac",
+            "password": "allezlesbleus98"
         }
     ],
     "items": [
