@@ -2,8 +2,6 @@ const app = require('express')();
 const fs = require('fs');
 const mongoDBClient = require('../MongoConnector');
 
-const client = mongoDBClient.init();
-
 
 
 fs.readFile('./db.json', (err, data) => {
@@ -19,21 +17,20 @@ app.use((req, res, next) => {
 });
 
 app.route('/')
-    .get((req, res) => { res.json(json.users) })
+    .get((req, res) => { 
+        mongoDBClient.db.collection('users').find({}).toArray().then(result => {
+            res.json(result) 
+        }).catch(err => {
+            console.error(err);
+        });
+    })
     .post((req, res) => {
 
-       
-
-        mongoDBClient.db.collection('users').insert({
+        mongoDBClient.db.collection('users').insertOne({
             "id": (typeof req.body.id !== 'undefined') ? req.body.id : json.users.length + 1,
             "name": req.body.name,
             "password": req.body.password
         });
-
-
-        mongoDBClient.db.collection('users').find({ "name": req.body.name }).toArray().then(result => {
-            console.log(result);
-        })
 
         let User = {
             id: (typeof req.body.id !== 'undefined') ? req.body.id : json.users.length + 1,
@@ -56,11 +53,15 @@ app.put('/:userId', (req, res) => {
 });
 app.delete('/:userId', (req, res) => {
     
-    let i = json.users.findIndex(x => x.id == req.params.userId);
+    mongoDBClient.db.collection('users').findOneAndDelete({
+        "id": req.params.userId 
+    });
 
-    json.users.splice(i,1);
+    //let i = json.users.findIndex(x => x.id == req.params.userId);
 
-    fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
+    //json.users.splice(i,1);
+
+    //fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
 });
 
 // MiddleWare errors

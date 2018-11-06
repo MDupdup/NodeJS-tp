@@ -9,3 +9,7 @@
  ==> URI: /users/56.
 [11/5/2018, 11:36:50 PM] Error catched on DELETE request. 
  ==> URI: /items/65.
+[2018-11-6 22:30:48] Error catched on DELETE request. 
+ ==> URI: /users/16.
+[2018-11-6 22:31:41] Error catched on DELETE request. 
+ ==> URI: /users/15.
