@@ -14,37 +14,46 @@ app.use((req, res, next) => {
 });
 
 app.route('/list')
-    .get((req, res) => { res.json(json.list) })
+    .get((req, res) => { 
+        mongoDBClient.db.collection('list').find({}).toArray().then(result => {
+            res.json(result) 
+        }).catch(err => {
+            console.error(err);
+        });
+    })
     .post((req, res) => {
 
-        let List = {
-            id: (typeof req.body.id !== 'undefined') ? req.body.id : json.list.length + 1,
-            name: req.body.name,
-            userId: req.body.userId,
-            itemId: req.body.itemId
-        }
-        json.list.push(List);
-
-        fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
+        mongoDBClient.db.collection('list').insertOne({
+            "id": req.body.id,
+            "name": req.body.name,
+            "userId": req.body.userId,
+            "itemId": req.body.itemId
+        });
      });
-app.get('/:listId', (req, res) => { res.json(json.list.find(x => x.id == req.params.listId)) });
+
+app.get('/:listId', (req, res) => { 
+    mongoDBClient.db.collection('users').find({ "id": parseInt(req.params.listId) }).toArray().then(result => {
+        res.json(result) 
+    }).catch(err => {
+        console.error(err);
+    });
+ });
 app.put('/:listId', (req, res) => {
     
-    let list = json.list.find(x => x.id == req.params.listId);
-
-    list.name = req.body.name;
-    list.userId = req.body.userId;
-    list.itemId = req.body.itemId;
-
-    fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
+    mongoDBClient.db.collection('list').findOneAndReplace(
+        { "id": parseInt(req.params.listId) },
+        {
+            "id": req.body.id,
+            "name": req.body.name,
+            "userId": req.body.userId,
+            "itemId": req.body.itemId
+        });
 });
 app.delete('/:listId', (req, res) => {
     
-    let i = json.list.findIndex(x => x.id == req.params.listId);
-
-    json.list.splice(i,1);
-
-    fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
+    mongoDBClient.db.collection('list').deleteOne({
+        "id": parseInt(req.params.listId) 
+    });
 });
 
 // MiddleWare errors

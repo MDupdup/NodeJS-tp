@@ -13,3 +13,19 @@
  ==> URI: /users/16.
 [2018-11-6 22:31:41] Error catched on DELETE request. 
  ==> URI: /users/15.
+[2018-11-6 22:40:58] Error catched on GET request. 
+ ==> URI: /users/12.
+[2018-11-6 22:41:18] Error catched on GET request. 
+ ==> URI: /users/12.
+[2018-11-6 22:42:03] Error catched on GET request. 
+ ==> URI: /users/12.
+[2018-11-6 22:42:24] Error catched on GET request. 
+ ==> URI: /users/12.
+[2018-11-6 22:42:25] Error catched on GET request. 
+ ==> URI: /users/12.
+[2018-11-6 22:42:26] Error catched on GET request. 
+ ==> URI: /users/12.
+[2018-11-6 22:42:26] Error catched on GET request. 
+ ==> URI: /users/12.
+[2018-11-6 22:43:22] Error catched on DELETE request. 
+ ==> URI: /users/12.

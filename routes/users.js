@@ -27,34 +27,49 @@ app.route('/')
     .post((req, res) => {
 
         mongoDBClient.db.collection('users').insertOne({
-            "id": (typeof req.body.id !== 'undefined') ? req.body.id : json.users.length + 1,
+            "id": req.body.id,
             "name": req.body.name,
             "password": req.body.password
         });
 
-        let User = {
+        /*let User = {
             id: (typeof req.body.id !== 'undefined') ? req.body.id : json.users.length + 1,
             name: req.body.name,
             password: req.body.password
         }
         json.users.push(User);
 
-        fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
+        fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));*/
      });
-app.get('/:userId', (req, res) => { res.json(json.users.find(x => x.id == req.params.userId)) });
+app.get('/:userId', (req, res) => {
+    mongoDBClient.db.collection('users').find({ "id": parseInt(req.params.userId) }).toArray().then(result => {
+        res.json(result) 
+    }).catch(err => {
+        console.error(err);
+    });
+    //res.json(json.users.find(x => x.id == req.params.userId))
+ });
 app.put('/:userId', (req, res) => {
     
-    let user = json.users.find(x => x.id == req.params.userId);
+
+    mongoDBClient.db.collection('users').findOneAndReplace(
+        { "id": parseInt(req.params.userId) },
+        {
+            "id": req.body.id,
+            "name": req.body.name,
+            "password": req.body.password
+        });
+    /*let user = json.users.find(x => x.id == req.params.userId);
 
     list.name = req.body.name;
     list.password = req.body.password;
 
-    fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
+    fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));*/
 });
 app.delete('/:userId', (req, res) => {
     
-    mongoDBClient.db.collection('users').findOneAndDelete({
-        "id": req.params.userId 
+    mongoDBClient.db.collection('users').deleteOne({
+        "id": parseInt(req.params.userId) 
     });
 
     //let i = json.users.findIndex(x => x.id == req.params.userId);

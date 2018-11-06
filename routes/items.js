@@ -14,38 +14,47 @@ app.use((req, res, next) => {
 });
 
 app.route('/')
-    .get((req, res) => { res.json(json.items) })
+    .get((req, res) => { 
+        mongoDBClient.db.collection('items').find({}).toArray().then(result => {
+            res.json(result) 
+        }).catch(err => {
+            console.error(err);
+        });
+     })
     .post((req, res) => {
 
-        let Item = {
-            id: (typeof req.body.id !== 'undefined') ? req.body.id : json.items.length + 1,
-            label: req.body.label,
-            image: req.body.image,
-            description: req.body.description
-        }
-        json.items.push(Item);
+        mongoDBClient.db.collection('items').insertOne({
+            "id": req.body.id,
+            "label": req.body.label,
+            "image": req.body.image,
+            "description": req.body.description
+        });
 
-        fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
      });
 
-app.get('/:itemId', (req, res) => { res.json(json.items.find(x => x.id == req.params.itemId)) });
+app.get('/:itemId', (req, res) => { 
+    mongoDBClient.db.collection('items').find({ "id": parseInt(req.params.itemId) }).toArray().then(result => {
+        res.json(result) 
+    }).catch(err => {
+        console.error(err);
+    });
+});
 app.put('/:itemId', (req, res) => {
     
-    let item = json.items.find(x => x.id == req.params.itemId);
-
-    item.label = req.body.label;
-    item.image = req.body.image;
-    item.description = req.body.description;
-
-    fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
+    mongoDBClient.db.collection('items').findOneAndReplace(
+        { "id": parseInt(req.params.itemId) },
+        {
+            "id": req.body.id,
+            "label": req.body.label,
+            "image": req.body.image,
+            "description": req.body.description
+        });
 });
 app.delete('/:itemId', (req, res) => {
     
-    let i = json.item.findIndex(x => x.id == req.params.itemId);
-
-    json.item.splice(i,1);
-
-    fs.writeFileSync('./db.json', JSON.stringify(json, null, 4));
+    mongoDBClient.db.collection('items').deleteOne({
+        "id": parseInt(req.params.itemId) 
+    });
 });
 
 // MiddleWare errors
