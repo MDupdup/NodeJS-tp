@@ -6,3 +6,12 @@
 [11/5/2018, 11:36:50 PM] DELETE request received (URI: /items/65).
 [11/5/2018, 11:37:42 PM] DELETE request received (URI: /list/7).
 [11/5/2018, 11:45:44 PM] GET request received (URI: /users).
+[2018-11-6 16:26:47] POST request received (URI: /users/).
+[2018-11-6 16:27:13] POST request received (URI: /users/).
+[2018-11-6 17:06:58] POST request received (URI: /users/).
+[2018-11-6 17:14:49] POST request received (URI: /users/).
+[2018-11-6 17:29:42] POST request received (URI: /users/).
+[2018-11-6 17:30:02] POST request received (URI: /users/).
+[2018-11-6 17:32:00] POST request received (URI: /users/).
+[2018-11-6 17:32:11] POST request received (URI: /users/).
+[2018-11-6 17:44:06] POST request received (URI: /users/).

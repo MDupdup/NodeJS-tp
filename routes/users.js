@@ -1,5 +1,10 @@
 const app = require('express')();
 const fs = require('fs');
+const mongoDBClient = require('../MongoConnector');
+
+const client = mongoDBClient.init();
+
+
 
 fs.readFile('./db.json', (err, data) => {
     if(err) {
@@ -16,6 +21,19 @@ app.use((req, res, next) => {
 app.route('/')
     .get((req, res) => { res.json(json.users) })
     .post((req, res) => {
+
+       
+
+        mongoDBClient.db.collection('users').insert({
+            "id": (typeof req.body.id !== 'undefined') ? req.body.id : json.users.length + 1,
+            "name": req.body.name,
+            "password": req.body.password
+        });
+
+
+        mongoDBClient.db.collection('users').find({ "name": req.body.name }).toArray().then(result => {
+            console.log(result);
+        })
 
         let User = {
             id: (typeof req.body.id !== 'undefined') ? req.body.id : json.users.length + 1,
