@@ -59,3 +59,10 @@
 [2018-11-6 22:53:35] PUT request received (URI: /users/13).
 [2018-11-6 22:53:50] GET request received (URI: /users/13).
 [2018-11-6 22:54:02] GET request received (URI: /users/).
+[2018-11-7 14:08:52] GET request received (URI: /users/).
+[2018-11-7 14:14:39] DELETE request received (URI: /users/5be206175155e91c28474fcc).
+[2018-11-7 14:15:06] GET request received (URI: /users/).
+[2018-11-7 14:15:44] DELETE request received (URI: /users/2).
+[2018-11-7 14:15:50] GET request received (URI: /users/).
+[2018-11-7 16:04:37] GET request received (URI: /users/).
+[2018-11-7 16:04:45] GET request received (URI: /users/).

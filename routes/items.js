@@ -1,11 +1,20 @@
 const app = require('express')();
 const fs = require('fs');
 
+const mongoose = require('mongoose');
+
 fs.readFile('./db.json', (err, data) => {
     if(err) {
         console.error(err)
     }
     json = JSON.parse(data);
+});
+
+const ItemModel = mongoose.model('items', {
+    id: Number,
+    label: String,
+    image: String,
+    description: String
 });
 
 app.use((req, res, next) => {
@@ -15,46 +24,85 @@ app.use((req, res, next) => {
 
 app.route('/')
     .get((req, res) => { 
+
+        ItemModel.find({})
+        .then(result => {
+            res.json(result);
+        });
+
+/*
         mongoDBClient.db.collection('items').find({}).toArray().then(result => {
             res.json(result) 
         }).catch(err => {
             console.error(err);
-        });
+        });*/
      })
     .post((req, res) => {
 
-        mongoDBClient.db.collection('items').insertOne({
+        ItemModel.create({
             "id": req.body.id,
             "label": req.body.label,
             "image": req.body.image,
             "description": req.body.description
+        }).then(result => {
+            res.json(result);
         });
 
+        /*mongoDBClient.db.collection('items').insertOne({
+            "id": req.body.id,
+            "label": req.body.label,
+            "image": req.body.image,
+            "description": req.body.description
+        });*/
+
+        res.send("Request successful");
      });
 
 app.get('/:itemId', (req, res) => { 
-    mongoDBClient.db.collection('items').find({ "id": parseInt(req.params.itemId) }).toArray().then(result => {
+
+    ItemModel.find({ "id": parseInt(req.params.itemId) })
+    .then(result => {
+        res.json(result);
+    });
+
+
+    /*mongoDBClient.db.collection('items').find({ "id": parseInt(req.params.itemId) }).toArray().then(result => {
         res.json(result) 
     }).catch(err => {
         console.error(err);
-    });
+    });*/
 });
 app.put('/:itemId', (req, res) => {
     
-    mongoDBClient.db.collection('items').findOneAndReplace(
+    ItemModel.findByIdAndUpdate(parseInt(req.params.itemId), {
+        "id": req.body.id,
+        "label": req.body.label,
+        "image": req.body.image,
+        "description": req.body.description
+    }).then(result => {
+        res.json(result);
+    });
+
+    /*mongoDBClient.db.collection('items').findOneAndReplace(
         { "id": parseInt(req.params.itemId) },
         {
             "id": req.body.id,
             "label": req.body.label,
             "image": req.body.image,
             "description": req.body.description
-        });
+        });*/
+
+        res.send("Request successful");
 });
 app.delete('/:itemId', (req, res) => {
     
-    mongoDBClient.db.collection('items').deleteOne({
+    ItemModel.findByIdAndDelete(parseInt(req.params.itemId));
+
+    /*mongoDBClient.db.collection('items').deleteOne({
         "id": parseInt(req.params.itemId) 
-    });
+    });*/
+
+    res.send("Request successful");
 });
 
 // MiddleWare errors

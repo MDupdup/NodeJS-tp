@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 //const assert = require('assert');
 
 // Connection URL
@@ -23,9 +24,25 @@ class MongoConnector {
                 })
         });
     }
-
-
 }
 
-const connector = new MongoConnector();
+class MongooseConnector {
+    init() {
+        return new Promise((resole, reject) => {
+            mongoose.connect(url + "/" + dbName, { useNewUrlParser: true });
+            const db = mongoose.connection;
+
+            db.on('error', error => {
+                console.error('connection error:', error);
+            })
+            db.once('open', () => {
+                console.log('Connected successfully to server.');
+            })
+        })
+    }
+}
+
+//const connector = new MongoConnector();
+
+const connector = new MongooseConnector();
 module.exports = connector;

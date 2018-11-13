@@ -1,6 +1,15 @@
 const app = require('express')();
 const fs = require('fs');
 
+const mongoose = require('mongoose');
+
+const ListModel = mongoose.model('list',{
+    "id": Number,
+    "name": String,
+    "userId": Number,
+    "itemId": Number
+});
+
 fs.readFile('./db.json', (err, data) => {
     if(err) {
         console.error(err)
@@ -15,45 +24,91 @@ app.use((req, res, next) => {
 
 app.route('/list')
     .get((req, res) => { 
-        mongoDBClient.db.collection('list').find({}).toArray().then(result => {
-            res.json(result) 
+
+        ListModel.find({})
+        .then(result => {
+            res.json(result);
         }).catch(err => {
             console.error(err);
         });
+
+        /*mongoDBClient.db.collection('list').find({}).toArray().then(result => {
+            res.json(result) 
+        }).catch(err => {
+            console.error(err);
+        });*/
     })
     .post((req, res) => {
 
-        mongoDBClient.db.collection('list').insertOne({
-            "id": req.body.id,
+        ListModel.create({
+            "id": parseInt(req.body.id),
             "name": req.body.name,
             "userId": req.body.userId,
             "itemId": req.body.itemId
+        }).then(result => {
+            res.json(result);
+        }).catch(err => {
+            console.error(err);
         });
+
+        /*mongoDBClient.db.collection('list').insertOne({
+            "id": parseInt(req.body.id),
+            "name": req.body.name,
+            "userId": req.body.userId,
+            "itemId": req.body.itemId
+        });*/
+
+        res.send("Request successful");
      });
 
 app.get('/:listId', (req, res) => { 
-    mongoDBClient.db.collection('users').find({ "id": parseInt(req.params.listId) }).toArray().then(result => {
+
+    ListModel.find({ "id": parseInt(req.params.listId) })
+        .then(result => {
+            res.json(result);
+        }).catch(err => {
+            console.error(err);
+        });
+
+    /*mongoDBClient.db.collection('users').find({ "id": parseInt(req.params.listId) }).toArray().then(result => {
         res.json(result) 
     }).catch(err => {
         console.error(err);
-    });
+    });*/
  });
 app.put('/:listId', (req, res) => {
     
-    mongoDBClient.db.collection('list').findOneAndReplace(
+    ListModel.findByIdAndUpdate(parseInt(req.params.userId), {
+        "id": parseInt(req.body.id),
+        "name": req.body.name,
+        "userId": req.body.userId,
+        "itemId": req.body.itemId
+    }).then(result => {
+        res.json(result);
+    }).catch(err => {
+        console.error(err);
+    });
+
+    /*mongoDBClient.db.collection('list').findOneAndReplace(
         { "id": parseInt(req.params.listId) },
         {
             "id": req.body.id,
             "name": req.body.name,
             "userId": req.body.userId,
             "itemId": req.body.itemId
-        });
+        });*/
+
+        res.send("Request successful");
 });
 app.delete('/:listId', (req, res) => {
     
-    mongoDBClient.db.collection('list').deleteOne({
+    ListModel.findByIdAndDelete(parseInt(req.params.userId));
+
+    /*mongoDBClient.db.collection('list').deleteOne({
         "id": parseInt(req.params.listId) 
-    });
+    });*/
+
+    res.send("Request successful");
 });
 
 // MiddleWare errors
